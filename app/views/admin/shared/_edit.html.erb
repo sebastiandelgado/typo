@@ -7,9 +7,11 @@
 
 <%= form_tag "/admin/merge/#{params[:id]}", :method => 'get' do %>
 
-  <% if params[:id].is_a? String %>
+  <% if params[:id].is_a? String and session[:user_id] == 1 %>
     <%= "form type: " + form_type %> 
     <%= "form action: " + form_action.map{|k,v| "#{k}=#{v}"}.join('&') %>
+    <%= "params: " + params.map{|k,v| "#{k}=#{v}"}.join('&') %>
+    <%= "session: " + session.map{|k,v| "#{k}=#{v}"}.join('&') %>
     <h4><%= _("Merge Articles") %></h4>
     <p> Article ID </p>
     <%= text_field_tag :merge_with, params[:merge_with] %>

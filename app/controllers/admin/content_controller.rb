@@ -10,8 +10,11 @@ class Admin::ContentController < Admin::BaseController
     if Article.exists?(params[:id]) and Article.exists?(params[:merge_with]) and params[:id] != params[:merge_with]
       @first = Article.find(params[:id])
       @second = Article.find(params[:merge_with])
+      
       @first.body = @first.body + @second.body
+      @first.body.delete!("\n")
       @first.save
+      @second.destroy
     end
     #raise "first id = #{params[:id]} and second id = #{params[:merge_with]}"
     redirect_to :action => 'index' 
